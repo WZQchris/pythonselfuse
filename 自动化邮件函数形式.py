@@ -37,14 +37,8 @@ def sendemail(s_mail, r_mail, title, text_, _path, _attachment_type1, _attachmen
     server.sendmail('wuzhiqiang@mylike.com', recevermail, msg.as_string())
     server.quit()
 
-s_mail='吴智强<wuzhiqiang@mylike.com>'
-r_mail = [_format_addr('陈发金<chenfajin@mylike.com>'), _format_addr('李飞跃<lifeiyue@mylike.com>'), _format_addr('陈金云<chenjinyun@mylike.com>'), _format_addr('黄云<huangyun@mylike.com>'),
-          _format_addr('陈加鹏<chenjiapeng@mylike.com>'), _format_addr('金倩倩<jinqianqian@mylike.com>'), _format_addr('潘江滢<panjiangying@mylike.com>'), _format_addr('陈碧贞<chenbizhen@mylike.com>'),
-          _format_addr('杜春梅<duchunmei@mylike.com>'), _format_addr('缪荣荣<miaorongrong@mylike.com>'), _format_addr('吴泽<wuze@mylike.com>'), _format_addr('钟浩<zhonghao@mylike.com>'), _format_addr('杨帆<yangfan@mylike.com>'),
-          _format_addr('周俊<zhoujun@mylike.com>'), _format_addr('汪海疆<wanghaijiang@mylike.com>'), _format_addr('刘志睿<liuzhirui@mylike.com>'), _format_addr('谢宗钰<xiezongyu@mylike.com>'),
-          _format_addr('左泽平<zuozeping@mylike.com>'), _format_addr('刘婉瑜<liuwanyu@mylike.com>'),
-          _format_addr('汪昊<wanghao@mylike.com>'), _format_addr('俞成杰<yuchengjie@mylike.com>'), _format_addr('元雪<yuanxue@mylike.com>'),
-          _format_addr('吴智强<wu.zhiqiang@yexfintech.com>')]
+s_mail = 
+r_mail = 
 text_ = """\nPS：有任何数据异常、无法查看等问题请及时回复邮件排除故障，谢谢！"""
 title = """颐尔信-百度有钱花%s进件汇总"""%day
 _path = [r'C:\Users\wuzhiqiang\Desktop\报表数据\颐尔信-有钱花\颐尔信-百度有钱花%s进件汇总.xls'%day,
