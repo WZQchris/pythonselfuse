@@ -113,7 +113,7 @@ def KolmogorovSmirnov(y, y_predict):
 def D_entropy(data,n):  # 计算总信息熵，其中data是数据集，n为因变量所在列索引
     p = data.iloc[:,n].groupby(data[data.columns[n]]).count() / len(data)
     entropy_all = -(p * np.log(p)).sum()
-    return entropy_all,p
+    return entropy_all
     
 def condition_entropy(data,n,value): #计算条件熵，其中data是数据集，n为因变量所在列索引，value为对应自变量的字段名称
 #令p_all[i] 为value自变量的分类个数 x[i] / 样本总值  ，p[i]为value自变量分类（如性别分为‘0,1’二分类）下因变量分类结果个数y[i] / x[i]
@@ -131,3 +131,36 @@ def PearsonCorrelationCoefficient(x, y):
     y = y - y.mean()
     PCCs = (x * y).sum() / (np.sqrt(np.square(x).sum()) * np.sqrt(np.square(y).sum()))
     return PCCs
+
+def SplitPoint(data, n, value):
+    sort_value = np.sort(data[value].unique()) #获得升序唯一值array
+    en_add_finally, split_finally = 0.000, 0.0000     #设置初始值
+    for i in range(len(sort_value) - 1): #降低一次循环
+        split_point = (sort_value[i] + sort_value[i+1]) / 2 #获得相邻两个数之间的分割点
+        x = data[[value, data.columns[n]]] #凑成新的DataFrame，避免影响data主数据
+        x.loc[x[value] > split_point, value] = 0 #设置值
+        x.loc[x[value] < split_point, value] = 1
+        entropy_addition = D_entropy(x, 1) - condition_entropy(x, 1, value) #获得信息增益
+        if entropy_addition > en_add_finally: #如果该分割点产生的信息增益比当前最佳信息增益值大，则说明该分割点离散化效果更好，替代当前最佳信息增益值和当前最佳分割点
+            en_add_finally = entropy_addition
+            split_finally = split_point
+    return split_finally
+
+
+
+def Discretization(data, n, value, entropy_threshold = 0.10, length_threshold = 10, bins=[]):
+# #parameters:  data: 输入m*n格式数据，m行是指样本数据量，n列是指存在（n-1）列特征变量， 剩余一列为因变量
+#               n: 因变量值Y列所在列索引值，从0开始计数
+#               value: 需要为连续型变量类型，列名值，str格式
+    split_point = SplitPoint(data, n, value)
+    bins.append(split_point)
+    data_x = data[data[value] > split_point]
+    data_y = data[data[value] < split_point]
+    #分割后的x部分数据信息熵大于阈值且x部分数据量大于阈值时， 需要再次划分且具备划分空间
+    if (D_entropy(data_x, n)[0] > entropy_threshold) and (len(data_x) > length_threshold): 
+        Discretization(data_x, n, value, entropy_threshold, length_threshold, bins=bins)
+    if (D_entropy(data_y, n)[0] > entropy_threshold) and (len(data_y) > length_threshold):
+        Discretization(data_y, n, value, entropy_threshold, length_threshold, bins=bins)
+    
+    return bins
+            
