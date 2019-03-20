@@ -40,14 +40,11 @@ def sendemail(s_mail, r_mail, title, text_, _path, _attachment_type1, _attachmen
 s_mail = "吴智强<wuzhiqiang@mylike.com>"
 r_mail = [_format_addr("吴智强<chriswuCM@tom.com>"), _format_addr("谢东东<12345@qq.com>")]
 text_ = """\nPS：有任何数据异常、无法查看等问题请及时回复邮件排除故障，谢谢！"""
-title = """颐尔信-百度有钱花%s进件汇总"""%day
-_path = [r'C:\Users\wuzhiqiang\Desktop\报表数据\颐尔信-有钱花\颐尔信-百度有钱花%s进件汇总.xls'%day,
-         r'C:\Users\wuzhiqiang\Desktop\报表数据\颐尔信-有钱花\颐尔信-百度有钱花%s数据图.html'%day,
-         r"C:\Users\wuzhiqiang\Desktop\报表数据\颐尔信-乔融\颐尔信-乔融%s进件汇总.xls"%day,
-         r"C:\Users\wuzhiqiang\Desktop\报表数据\颐尔信-乔融\颐尔信-乔融%s数据图.html"%day]
+title =
+_path = []
 _attachment_type1 = ['xls', 'html', 'xls', 'html']
 _attachment_type2 = ['xls', 'html', 'xls', 'html']
-_attachment_name = ['颐尔信-百度有钱花%s进件汇总.xls'%day, '颐尔信-百度有钱花%s数据图.html'%day, "颐尔信-乔融%s进件汇总.xls"%day, "颐尔信-乔融%s数据图.html"%day]
+_attachment_name = []
 password = '这是密码'
 
 #sendemail(s_mail, r_mail, title, text_, _path, _attachment_type1, _attachment_type2, _attachment_name, password)
